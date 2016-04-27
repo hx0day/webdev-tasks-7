@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="hrundel.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script>
+        window.onload = function () {
+            run();
+        }
+    </script>
+    <style>
+        .progress {
+            margin: 10px;
+            position: relative;
+        }
+
+        .progress__value {
+            position: absolute;
+            left: 100px;
+        }
+
+        progress,
+        progress::-webkit-progress-bar {
+            border-radius: 10px;
+            height: 18px;
+            width: 200px;
+        }
+
+        progress::-webkit-progress-value {
+            background: greenyellow;
+            border-radius: 10px;
+        }
+
+        progress::-webkit-progress-bar {
+            background: white;
+            border: 2px solid #cacaca;
+            border-radius: 10px;
+
+        }
+    </style>
+</head>
+<body>
+<button class="js-new-game">New game</button>
+<div class="js-msg"></div>
+<svg class="hrundel-svg" width="200" height="200">
+    <!--<style>-->
+    <!--#block{display: none}-->
+    <!--</style>-->
+    <symbol id="block">
+        <rect width="4" height="4" x="3" y="3" stroke="black"></rect>
+        <rect width="10" height="10" x="0" y="0" fill="none" stroke="black"
+              stroke-width="1%"></rect>
+    </symbol>
+    <symbol id="ear">
+        <use x="20" y="0" xlink:href="#block"/>
+        <use x="30" y="0" xlink:href="#block"/>
+        <use x="10" y="10" xlink:href="#block"/>
+        <use x="40" y="10" xlink:href="#block"/>
+        <use x="0" y="20" xlink:href="#block"/>
+        <use x="20" y="20" xlink:href="#block"/>
+        <use x="30" y="20" xlink:href="#block"/>
+        <use x="50" y="20" xlink:href="#block"/>
+        <use x="10" y="30" xlink:href="#block"/>
+        <use x="20" y="30" xlink:href="#block"/>
+        <use x="30" y="30" xlink:href="#block"/>
+        <use x="40" y="30" xlink:href="#block"/>
+    </symbol>
+
+    <symbol id="line-5">
+        <use x="0" y="0" xlink:href="#block"/>
+        <use x="0" y="10" xlink:href="#block"/>
+        <use x="0" y="20" xlink:href="#block"/>
+        <use x="0" y="30" xlink:href="#block"/>
+        <use x="0" y="40" xlink:href="#block"/>
+    </symbol>
+
+    <use x="0" y="0" xlink:href="#ear"/>
+    <!-- line 6 block -->
+    <use x="60" y="10" xlink:href="#block"/>
+    <use x="70" y="10" xlink:href="#block"/>
+    <use x="80" y="10" xlink:href="#block"/>
+    <use x="90" y="10" xlink:href="#block"/>
+    <use x="100" y="10" xlink:href="#block"/>
+    <use x="110" y="10" xlink:href="#block"/>
+
+    <use x="120" y="0" xlink:href="#ear"/>
+
+    <use x="30" y="40" xlink:href="#line-5"/>
+    <use x="140" y="40" xlink:href="#line-5"/>
+
+
+    <!-- eye -->
+    <use x="70" y="40" xlink:href="#block"/>
+    <use x="100" y="40" xlink:href="#block"/>
+
+    <symbol id="nose">
+        <use x="10" y="0" xlink:href="#block"/>
+        <use x="20" y="0" xlink:href="#line-5"/>
+        <use x="30" y="0" xlink:href="#line-5"/>
+        <use x="40" y="0" xlink:href="#block"/>
+        <use x="0" y="10" xlink:href="#block"/>
+        <use x="0" y="20" xlink:href="#block"/>
+        <use x="0" y="30" xlink:href="#block"/>
+        <use x="50" y="10" xlink:href="#block"/>
+        <use x="50" y="20" xlink:href="#block"/>
+        <use x="50" y="30" xlink:href="#block"/>
+        <use x="10" y="40" xlink:href="#block"/>
+        <use x="40" y="40" xlink:href="#block"/>
+    </symbol>
+
+    <use x="60" y="60" xlink:href="#nose"/>
+
+
+    <symbol id="hand">
+        <use x="10" y="0" xlink:href="#block"/>
+        <use x="20" y="0" xlink:href="#block"/>
+        <use x="0" y="10" xlink:href="#block"/>
+        <use x="30" y="10" xlink:href="#block"/>
+        <use x="10" y="20" xlink:href="#block"/>
+        <use x="20" y="20" xlink:href="#block"/>
+    </symbol>
+    <use x="10" y="80" xlink:href="#hand"/>
+    <use x="130" y="80" xlink:href="#hand"/>
+
+    <use x="40" y="110" xlink:href="#block"/>
+    <use x="130" y="110" xlink:href="#block"/>
+    <use x="40" y="120" xlink:href="#block"/>
+    <use x="130" y="120" xlink:href="#block"/>
+    <use x="40" y="130" xlink:href="#block"/>
+    <use x="130" y="130" xlink:href="#block"/>
+    <!--<rect width="4" height="4" x="13" y="3" stroke="black"></rect>-->
+    <!--<rect width="10" height="10" x="30" y="0" fill="none" stroke="black"-->
+    <!--stroke-width="1%"></rect>-->
+    <!--<rect width="4" height="4" x="13" y="3" stroke="black"></rect>-->
+    <!--<rect width="10" height="10" x="30" y="0" fill="none" stroke="black"-->
+    <!--stroke-width="1%"></rect>-->
+    <!--<rect width="4" height="4" x="13" y="3" stroke="black"></rect>-->
+    <!--<rect width="10" height="10" x="30" y="0" fill="none" stroke="black"-->
+    <!--stroke-width="1%"></rect>-->
+</svg>
+<div class="progress">
+    <progress value="100" max="100" class="js-satiety-progress"></progress>
+    <span class="progress__value js-satiety-value"></span>
+</div>
+<div class="progress">
+    <progress value="10" max="100" class="js-energy-progress"></progress>
+    <span class="progress__value  js-energy-value"></span>
+</div>
+<div class="progress">
+    <progress value="100" max="100" class="js-mood-progress"></progress>
+    <span class="progress__value  js-mood-value"></span>
+</div>
+</html>
