@@ -12,6 +12,19 @@ function changeSkill(skill, step) {
 }
 
 function run() {
+    if ('hidden' in document) {
+        hidden = 'hidden';
+        visibilityState = 'visibilityState';
+        visibilityChange = 'visibilitychange';
+    } else if ('mozHidden' in document) {
+        hidden = 'mozHidden';
+        visibilityState = 'mozVisibilityState';
+        visibilityChange = 'mozvisibilitychange';
+    } else if ('webkitHidden' in document) {
+        hidden = 'webkitHidden';
+        visibilityState = 'webkitVisibilityState';
+        visibilityChange = 'webkitvisibilitychange';
+    }
     var hrundel;
     var velocityEnergy = -0.00001;
     var velocityMood = -0.00002;
@@ -71,8 +84,8 @@ function run() {
         hrundel = new Hrundel('Htop');
     } else {
         hrundel = new Hrundel(JSON.parse(localStorage.hrundel));
-    }
 
+    }
     var refreshIntervalId;
     document.addEventListener(visibilityChange, function () {
         if (document[hidden]) {
@@ -82,7 +95,26 @@ function run() {
             velocityEnergy = -0.00002;
             clearInterval(refreshIntervalId);
         }
+
     });
+
+    if (window.speechSynthesis) {
+
+        var msg = new SpeechSynthesisUtterance('Мяу');
+
+
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[10];
+        msg.rate = 1; // Скорость от 0 до 10
+        msg.pitch = 2; // Высота от 0 до 2
+        msg.lang = "ru-RU";
+
+        setInterval(function () {
+            window.speechSynthesis.speak(msg);
+        }, 5000);
+    } else {
+        alert('Speech Synthesis API не поддерживается');
+    }
 
 
     function step() {
@@ -93,11 +125,10 @@ function run() {
         hrundel.energy = changeSkill(hrundel.energy, velocityEnergy);
         hrundel.satiety = changeSkill(hrundel.satiety, velocitySatiety);
         hrundel.mood = changeSkill(hrundel.mood, velocityMood);
-
         if (hrundel.satiety > 100) {
             recognizer.stop();
-        }
 
+        }
         progressEnergy.value = hrundel.energy * 100;
         valueEnergy.innerHTML = parseInt(hrundel.energy * 100) + '%';
         progressMood.value = hrundel.mood * 100;
