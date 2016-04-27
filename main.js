@@ -38,6 +38,8 @@ function run() {
     var newGame = document.querySelector(".js-new-game");
     var hrundelSvg = document.querySelector('.hrundel-svg');
     var jsMsg = document.querySelector('.js-msg');
+    var jsVoiceVolume = document.querySelector('.js-voice-volume');
+
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     var recognizer = new SpeechRecognition();
@@ -102,7 +104,9 @@ function run() {
 
         var msg = new SpeechSynthesisUtterance('Мяу');
 
-
+        jsVoiceVolume.onchange = function () {
+            msg.volume = this.value / 100;
+        };
         var voices = window.speechSynthesis.getVoices();
         msg.voice = voices[10];
         msg.rate = 1; // Скорость от 0 до 10
